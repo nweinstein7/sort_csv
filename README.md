@@ -6,6 +6,12 @@ Take in a list of .csv files, merge them together, and sort them by the 4th colu
 
 To run:
 
+0. Prereqs: Clean data. Run:
+
+```
+sed -i'.orig' 's/, "/,"/g' /path/to/file.csv
+```
+
 1. Install dependencies (once):
 
 ```pip install -r requirements.txt```

@@ -13,15 +13,12 @@ def combine_and_sort(file1, file2, out):
         file2: the full path to the second file
         out: the path to the output file
     '''
-    first = pd.read_csv(file1, header=0, quotechar='"', sep=',\s*', engine='python')
-    second = pd.read_csv(file2, header=0, quotechar='"', sep=',\s*', engine='python')
+    first = pd.read_csv(file1, header=0, quotechar='"', sep=',', quoting=csv.QUOTE_ALL, engine='python')
+    second = pd.read_csv(file2, header=0, quotechar='"', sep=',', quoting=csv.QUOTE_ALL, engine='python')
     combined = first.append(second, ignore_index=True)
-    combined.columns = combined.columns.str.strip('"')
-    for col in list(combined):
-        combined[col] = combined[col].map(lambda x: x.strip('"'))
     combined[SORT_COLUMN] = pd.to_datetime(combined[SORT_COLUMN])
     combined = combined.sort_values(by=[SORT_COLUMN])
-    combined.to_csv(out, index=False)
+    combined.to_csv(out, index=False, quoting=csv.QUOTE_ALL)
 
 def main():
     parser = argparse.ArgumentParser(
